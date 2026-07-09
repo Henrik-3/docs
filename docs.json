@@ -12,22 +12,18 @@
     "tabs": [
       {
         "tab": "Guides",
-        "pages": [
+        "groups": [
           {
             "group": "Getting Started",
             "pages": [
-              "general/auth"
+              "general/auth",
+              "valorant/error-codes"
             ]
           },
           {
             "group": "Valorant",
             "pages": [
-              {
-                "group": "General",
-                "pages": [
-                  "valorant/general"
-                ]
-              },
+              "valorant/general",
               {
                 "group": "Changes",
                 "pages": [
@@ -43,13 +39,12 @@
                 ]
               }
             ]
-          },
-          "valorant/error-codes"
+          }
         ]
       },
       {
         "tab": "OpenAPI Reference",
-        "openapi": "https://api.swaggerhub.com/apis/Henrik-3/HenrikDev-API/4.2.0"
+        "openapi": "https://api.henrikdev.xyz/docs"
       }
     ],
     "global": {
