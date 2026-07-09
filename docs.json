@@ -17,7 +17,9 @@
             "group": "Getting Started",
             "pages": [
               "general/auth",
-              "valorant/error-codes"
+              "valorant/error-codes",
+              "general/premium",
+              "general/rate-limiting"
             ]
           },
           {
