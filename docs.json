@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "almond",
   "name": "HenrikDev API",
   "colors": {
     "primary": "#e3c31a",
@@ -44,7 +44,7 @@
       },
       {
         "tab": "OpenAPI Reference",
-        "openapi": "https://api.henrikdev.xyz/docs"
+        "openapi": "https://api.henrikdev.xyz/openapi.json"
       }
     ],
     "global": {
