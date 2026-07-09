@@ -12,7 +12,7 @@
     "tabs": [
       {
         "tab": "Guides",
-        "groups": [
+        "pages": [
           {
             "group": "Getting Started",
             "pages": [
@@ -25,47 +25,26 @@
               {
                 "group": "General",
                 "pages": [
-                  "valorant/general",
-                  "valorant/error-codes"
+                  "valorant/general"
                 ]
               },
               {
                 "group": "Changes",
                 "pages": [
-                  "valorant/changes/v4.0.0",
-                  "valorant/changes/v4.0.1",
-                  "valorant/changes/v4.1.0",
-                  "valorant/changes/v4.2.0",
-                  "valorant/changes/v4.3.0",
-                  "valorant/changes/v4.5.0",
-                  "valorant/changes/v4.6.0",
                   "valorant/changes/v4.6.1",
+                  "valorant/changes/v4.6.0",
+                  "valorant/changes/v4.5.0",
+                  "valorant/changes/v4.3.0",
+                  "valorant/changes/v4.2.0",
+                  "valorant/changes/v4.1.0",
+                  "valorant/changes/v4.0.1",
+                  "valorant/changes/v4.0.0",
                   "valorant/changes"
-                ]
-              },
-              {
-                "group": "API Reference",
-                "pages": [
-                  "valorant/api-reference/accounts",
-                  "valorant/api-reference/mmr",
-                  "valorant/api-reference/mmr-history",
-                  "valorant/api-reference/match",
-                  "valorant/api-reference/matchlist",
-                  "valorant/api-reference/leaderboard",
-                  "valorant/api-reference/crosshair",
-                  "valorant/api-reference/esports",
-                  "valorant/api-reference/store-no-daily-stores",
-                  "valorant/api-reference/queue-status",
-                  "valorant/api-reference/version",
-                  "valorant/api-reference/premier",
-                  "valorant/api-reference/website",
-                  "valorant/api-reference/raw",
-                  "valorant/api-reference/stored-data",
-                  "valorant/api-reference"
                 ]
               }
             ]
-          }
+          },
+          "valorant/error-codes"
         ]
       },
       {
