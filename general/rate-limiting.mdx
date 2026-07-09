@@ -1,0 +1,65 @@
+---
+title: "Rate Limiting"
+description: "How rate limits are calculated and enforced in API v4"
+---
+
+# Rate Limiting
+
+Rate limits are tied to your API key and are enforced globally per key.
+
+## How usage is calculated (v4.0.0\+)
+
+Starting with v4.0.0, the rate limit counts both the call to the HenrikDev API and any Riot requests made in the background to build the response.
+
+```text
+1 request to the API = +1
+1 background request to Riot = +1
+```
+
+If the requested data is already cached or stored locally, no background Riot request is needed, so only the API call is counted.
+
+### Example 1: partial cache miss
+
+- Endpoint: `/valorant/v3/matches/eu/Henrik3/VALO?size=10`
+- 7 of 10 matches are stored on the server
+- Required Riot requests: 1 history \+ 3 matches
+- Rate limit cost: **1 (API) \+ 4 (Riot) = 5**
+
+### Example 2: full cache hit
+
+- Endpoint: `/valorant/v3/matches/eu/Henrik3/VALO?size=10`
+- All 10 matches are stored on the server
+- Required Riot requests: 0
+- Rate limit cost: **1 (API) \+ 0 (Riot) = 1**
+
+## Headers
+
+Every response includes headers to help you track usage:
+
+| Header | Description |
+| --- | --- |
+| `RateLimit-Policy` | All rate-limit windows for the current key/plan |
+| `RateLimit` | The most restrictive active window |
+| `X-RateLimit-Limit` | Total requests in the shortest window |
+| `X-RateLimit-Remaining` | Requests remaining in that window |
+| `X-RateLimit-Reset` | Seconds until the shortest window resets |
+| `X-RateLimit-Bucket` | Bucket identifier for this request |
+| `X-Request-ID` | Request identifier for debugging |
+
+### Cache headers
+
+| Header | Description |
+| --- | --- |
+| `X-Cache-Status` | `HIT` if the response was served from cache, otherwise `MISS` |
+| `X-Cache-TTL` | Seconds until the cached response expires (only on `HIT`) |
+
+## Exceeded limits
+
+If you exceed a rate limit, the API returns `429 Too Many Requests`. The `Retry-After`/`X-RateLimit-Reset` headers indicate how long to wait before the next request.
+
+## Increasing limits
+
+You can raise your rate limits in two ways:
+
+1. Request an upgraded API key type from the dashboard.
+2. Subscribe to a premium plan — premium limits are merged with your key limits and the more generous value is used.

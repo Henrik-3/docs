@@ -18,7 +18,8 @@
             "pages": [
               "general/auth",
               "valorant/error-codes",
-              "general/premium"
+              "general/premium",
+              "general/rate-limiting"
             ]
           },
           {
