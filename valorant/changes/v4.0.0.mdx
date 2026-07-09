@@ -1,0 +1,196 @@
+---
+title: "v4.0.0"
+description: "Major version 4.0.0 changelog"
+---
+
+# v4.0.0
+
+## Key Requirement
+
+Due to recent botting attacks that impacted everyone in terms of global 429 errors, an API Key is now required. As this would break twitch bots (no ability to set headers), you can authenticate with the `?api_key` query param. But no worries, you can easily get a key without waiting time, just follow the following steps:
+
+1. Join on the discord: [https://discord.com/invite/X3GaVkX2YN](https://discord.com/invite/X3GaVkX2YN)
+2. Verify
+3. Go to the **#get-a-key** channel
+4. Select from the dropdown list **"VALORANT (Basic Key)"**
+
+The bot will now present you an API Key that you can use instantly. If you need a higher rate limit key, please select "VALORANT (Advanced Key)". This type of key needs some information from you and follows an approval workflow and requires some waiting time.
+
+<Info>
+  Friendly reminder here: This API is not designed to be used in production apps, so custom keys are not guaranteed to be granted
+</Info>
+
+## Performance & Capacity
+
+Version 4 is written in Rust, which enables higher performance and lower latency for each request & and the overall ability to handle more requests at the same time.
+
+The amount of backend proxies also were upgraded to 7.5x in comparison to v3, allowing higher limits and more requests to be handled.
+
+## Rate Limit Calculation
+
+The way of how the rate limit is calculated will be changed. Right now it's simply 1 request to API = \+1 in your rate limit. As some of these calls require fetches from riot, some do not (cache, database or simply local generated like the crosshair endpoint) this will change. The biggest issue is the rate limit to riot, not the amount of requests the server can handle. So the new rate limiting will look like this:
+
+```text
+1 Request to API = +1
+1 Request to Riot in the background = +1
+```
+
+#### Example 1
+
+- Endpoint: /valorant/v3/matches/eu/Henrik3/VALO?size=10
+- 7 Matches stored on the server for this user
+- Hit cache: **false**
+- Required Requests to Riot:
+  - 1x history
+  - 3x matches (the ones not stored on server)
+- Ratelimit increase: 1 (Call to API) \+ 4 (Calls to Riot) = **5**
+
+#### Example 2
+
+- Endpoint: /valorant/v3/matches/eu/Henrik3/VALO?size=10
+- 10 Matches stored on the server for this user
+- Hit cache: **true**
+- Required Requests to Riot:
+  - 0x history
+  - 0x matches (the ones not stored on server)
+- Ratelimit increase: 1 (Call to API) \+ 0 (Calls to Riot) = **1**
+
+## New Headers
+
+Every Request now contains a **X-Cache-Status** header, which indicates if the response data was created from the internal cache.
+
+These values can be **HIT** or **MISS.**
+
+If the state is **HIT**, there also is a **X-Cache-TTL** header, indicating the time in seconds the cache (or if multiple caches used the cache TTL that will expire first) will expire and new data can be fetched. If the state is **MISS**, this header will not exist.
+
+## Error Handling & Error Codes
+
+- Error messages should be now more clear and reliable, no more random 500 error codes except real code issues
+- Due to this, the error codes have changed and there are some few more of them, you can find them [here](/valorant/error-codes)
+
+## Deprecations
+
+The following endpoints will be deprecated
+
+- [/valorant/v1/mmr/:affinity/:name/:tag](/valorant/api-reference/mmr)
+- [/valorant/v1/by-puuid/mmr/:affinity/:puuid](/valorant/api-reference/mmr)
+- [/valorant/v1/leaderboard/:affinity](/valorant/api-reference/leaderboard)
+- [/valorant/v1/lifetime/matches/:affinity/:name/:tag](/valorant/api-reference/stored-data)
+- [/valorant/v1/by-puuid/lifetime/matches/:affinity/:puuid](/valorant/api-reference/stored-data)
+- [/valorant/v1/lifetime/mmr/:affinity/:name/:tag](/valorant/api-reference/stored-data)
+- [/valorant/v1/by-puuid/lifetime/matches/:affinity/:puuid](/valorant/api-reference/stored-data)
+
+These deprecations will have their full effect 3 months after release of the respective patch (in this case v4)
+
+## Routing Issues (Telekom)
+
+As you may have noticed, there is an issue with routing if you have a Telekom (German, Hungary, Romania) connection. This is related to the peering between Telekom and CF, routing the package via NewArk in every case, resulting in a latency increase by 9x in average in the eu.
+
+The change that should fix this is applied for `beta.api` and `eu.api` already.
+
+#### For example:
+
+```text
+api.henrikdev.xyz/valorant/v1/esports/schedule (CF) ~450ms
+eu.api.henrikdev.xyz/valorant/v1/esports/schedule (Not CF) ~50ms
+```
+
+## Endpoint: Account
+
+### New Version
+
+```text
+/valorant/v2/account/:name/:tag
+/valorant/by-puuid/v2/account/:puuid
+```
+
+- Implement new, more stable way to get the puuid
+- Streamlined data structure (no more unix timestamps, no formated "X minutes ago")
+
+```json
+{
+    "status": 200,
+    "data": {
+        "puuid": "60325b89-7524-55be-be68-8ab3e7c0f2a3",
+        "region": "eu",
+        "account_level": 1086,
+        "name": "FUT rAx",
+        "tag": "VAL",
+        "card": "29d6aced-4f66-e000-15eb-71b1906a113a",
+        "title": "c8be8fda-46a8-9843-87bc-ecbf9672c227",
+        "platforms": [
+            "PC",
+            "CONSOLE"
+        ],
+        "updated_at": "2024-06-16T18:33:11.095Z"
+    }
+}
+```
+
+## Endpoint: Leaderboard
+
+### Changes
+
+- Query params: `name`, `tag`, `puuid`, `season`
+  - Will now be fetched directly if it's the current season (and not from 30min update cycle)
+  - Has a cache of 5min to reduce load
+
+### New Version
+
+```text
+/valorant/v3/leaderboard/:region/:platform
+```
+
+- Improved fetching performance
+- Support for `pc` and `console`
+- Streamlined data structure (no mix between camelCase and under\_score properties)
+- New query params:
+  - `start_index`: `number` =\> Between `1` & `amount Of Players (dynamic)`
+  - `size`: `number` =\> Defaults to 1000 =\> Between `1` & `amount Of Players (dynamic)`
+
+## Endpoint: MMR
+
+### Changes
+
+- The MMR v2 endpoints will now not have the ability anymore to filter by season with `?season`
+
+### New Version
+
+```text
+/valorant/v3/mmr/:region/:platform/:name/:tag
+/valorant/v3/by-puuid/:region/:platform/:puuid
+```
+
+- Streamline property names (like `currenttier` =\> `tier` or `ranking_in_tier` =\> `rr`
+- `by_season` is now an array
+
+## Endpoint: Matches
+
+### New Version
+
+```text
+/valorant/v4/match/:region/:platform/:id
+/valorant/v4/matches/:region/:platform/:name/:tag
+/valorant/v4/by-puuid/matches/:region/:platform/:puuid
+```
+
+- Skipped v3 for `/valorant/:version/match/:region/:id` to align version numbers
+- Added `region` param to the url
+  - This saves (potentially) 3 unnecessary requests to the riot servers =\> 3 requests less that can be used elsewhere
+- Removes duplicate data fragments and unnecessary data
+
+## Endpoint: Premier
+
+### Changes
+
+#### `/valorant/v1/premier/search`
+
+- The API now only returns 50 entries if no query parameters are provided instead of the whole database
+  - This was a bug in v3 and not intentional
+- Added a new property to each object: `updated_at: Date`
+
+#### `/valorant/v1/premier/:name/:tag` & `/valorant/v1/premier/:id`
+
+- These endpoints will now not return the 500 error code anymore
+- You can still only find teams that are enrolled and indexed in the ingame leaderboard
+- The leaderboard is getting scanned for updated/teams every three hours

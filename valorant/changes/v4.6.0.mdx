@@ -1,0 +1,30 @@
+---
+title: "v4.6.0"
+description: "Version 4.6.0 changelog"
+---
+
+# v4.6.0
+
+## New
+
+- New up-to-date OpenAPI specs
+  - You can find them at the respective instance with `/docs`
+    - Prod: [https://api.henrikdev.xyz/docs/](https://api.henrikdev.xyz/docs/)
+    - Beta: [https://beta.api.henrikdev.xyz/docs/](https://beta.api.henrikdev.xyz/docs/)
+- **Esports v2 endpoints**
+  - Based on [https://www.vlr.gg/](https://www.vlr.gg/) data
+  - There are several new endpoints available
+    - `/valorant/v2/esports/vlr/events`
+    - `/valorant/v2/esports/vlr/events/{event_id}/matches`
+    - `/valorant/v2/esports/vlr/matches/{match_id}`
+    - `/valorant/v2/esports/vlr/teams/{team_id}`
+    - `/valorant/v2/esports/vlr/teams/{team_id}/matches`
+    - `/valorant/v2/esports/vlr/teams/{team_id}/transactions`
+    - `/valorant/v2/esports/vlr/players/{player_id}`
+    - `/valorant/v2/esports/vlr/players/{player_id}/matches`
+  - Additional endpoints may be added on request and their data availability
+
+## Changes
+
+- /v1/stored-matches now include `name`& `tag` for new games
+  - Old games will be filled with this data over time, no ETA

@@ -1,0 +1,56 @@
+---
+title: "Stored Data"
+description: "Get stored matches and stored MMR history"
+---
+
+# Stored Data
+
+<Danger>
+  The `lifetime` endpoints are deprecated as the name might be confusing. Please switch to `stored-matches` (respective `stored-mmr-history`). The response stays the same.
+</Danger>
+
+    
+
+## Stored Matches
+
+### Get Stored Matches by Name and Tag (v1)
+
+```json
+GET /valorant/v1/stored-matches/{region}/{name}/{tag}
+```
+
+### Get Stored Matches by PUUID (v1)
+
+```json
+GET /valorant/v1/by-puuid/stored-matches/{region}/{puuid}
+```
+
+## Stored MMR History
+
+### Get Stored MMR History by Name and Tag (v1)
+
+```json
+GET /valorant/v1/stored-mmr-history/{region}/{name}/{tag}
+```
+
+### Get Stored MMR History by Name and Tag (v2)
+
+```json
+GET /valorant/v2/stored-mmr-history/{region}/{platform}/{name}/{tag}
+```
+
+### Get Stored MMR History by PUUID (v1)
+
+```json
+GET /valorant/v1/by-puuid/stored-mmr-history/{region}/{puuid}
+```
+
+### Get Stored MMR History by PUUID (v2)
+
+```json
+GET /valorant/v2/by-puuid/stored-mmr-history/{region}/{platform}/{puuid}
+```
+
+<Note>
+  As of v4.2.0, the v2 stored MMR history endpoints include `refunded_rr` \[i32\] and `was_derank_protected` \[bool\] fields.
+</Note>

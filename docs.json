@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "HenrikDev API",
   "colors": {
     "primary": "#e3c31a",
     "light": "#07C983",
@@ -14,22 +14,56 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Getting Started",
             "pages": [
-              "general/auth",
-              "quickstart",
-              "development"
+              "general/auth"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Valorant",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              {
+                "group": "General",
+                "pages": [
+                  "valorant/general",
+                  "valorant/error-codes"
+                ]
+              },
+              {
+                "group": "Changes",
+                "pages": [
+                  "valorant/changes/v4.0.0",
+                  "valorant/changes/v4.0.1",
+                  "valorant/changes/v4.1.0",
+                  "valorant/changes/v4.2.0",
+                  "valorant/changes/v4.3.0",
+                  "valorant/changes/v4.5.0",
+                  "valorant/changes/v4.6.0",
+                  "valorant/changes/v4.6.1",
+                  "valorant/changes"
+                ]
+              },
+              {
+                "group": "API Reference",
+                "pages": [
+                  "valorant/api-reference/accounts",
+                  "valorant/api-reference/mmr",
+                  "valorant/api-reference/mmr-history",
+                  "valorant/api-reference/match",
+                  "valorant/api-reference/matchlist",
+                  "valorant/api-reference/leaderboard",
+                  "valorant/api-reference/crosshair",
+                  "valorant/api-reference/esports",
+                  "valorant/api-reference/store-no-daily-stores",
+                  "valorant/api-reference/queue-status",
+                  "valorant/api-reference/version",
+                  "valorant/api-reference/premier",
+                  "valorant/api-reference/website",
+                  "valorant/api-reference/raw",
+                  "valorant/api-reference/stored-data",
+                  "valorant/api-reference"
+                ]
+              }
             ]
           }
         ]
@@ -66,5 +100,6 @@
       "github": "https://github.com/Henrik-3",
       "linkedin": "https://www.linkedin.com/in/henrik-mertens-82b704214/"
     }
-  }
+  },
+  "description": "HenrikDev Valorant API Documentation"
 }

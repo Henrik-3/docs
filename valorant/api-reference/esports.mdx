@@ -1,0 +1,24 @@
+---
+title: "Esports"
+description: "Get esports data including match schedules"
+---
+
+# Esports
+
+Here you can find some esports data. Right now only schedule data for the upcoming matches are available.
+
+## Get Esports Schedule (v1)
+
+```json
+GET /valorant/v1/esports/schedule
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `league` | string | Comma-separated list of leagues to filter by (e.g. `vct-international,vct-emea`) |
+
+<Note>
+  As of v4.6.0, there are also v2 esports endpoints based on [https://www.vlr.gg/](https://www.vlr.gg/) data. See the v4.6.0 changelog for available endpoints.
+</Note>

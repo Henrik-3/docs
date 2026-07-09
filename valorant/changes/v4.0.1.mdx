@@ -1,0 +1,19 @@
+---
+title: "v4.0.1"
+description: "Version 4.0.1 changelog"
+---
+
+# v4.0.1
+
+## Bug Fixes
+
+- Fixed a bug where the `date` value in the `/valorant/v1/esports/schedule` response was not ISO8061 conform
+- Fixed a bug where multiple `league` queries would create a deserialization error on the esports endpoint above
+- Fixed a bug where the `queue` filter for v3/v4 match list endpoints would return an empty array when filtering for custom games -\> Tradeoff: You can't filter for maps when using the queue filter AND search for customs
+- Fix that `mode_id` was null on custom games
+- Fix u8 (unsigned integer 8 bits) overflow on Team Deathmatch games, resulting in rounds lost of 167 for example instead of something between 0 and 100
+
+## Changes
+
+- The league query on the `/valorant/v1/esports/schedule` now should be comma separated (for example `vct-international,vct-emea`)
+- You can't filter for maps anymore when using the `queue` filter on v3/v4 match list endpoints

@@ -1,0 +1,20 @@
+---
+title: "v4.5.0"
+description: "Version 4.5.0 changelog"
+---
+
+# v4.5.0
+
+## Changes
+
+- **Multiple Rate Limits**
+  - The API now supports multiple rate limits to allow burst applications more overhead.
+    - To support this, we've implemented the **IETF Draft for RateLimit headers** to provide a clear indication of limits within the headers.
+      - As this is a draft, specifications may change, but it is currently the best way to display multiple limits.
+        - This adds two new headers: `ratelimit-policy` and `ratelimit`.
+        - _Example:_ `ratelimit: "per1min";r=86;t=58;pk=:NzExYTliNTMtYzc1ZS00ZjI2LTk2ZGMtNDg4NmI2OTc4NTlj:`
+        - _Example:_ `ratelimit-policy: "per1min";q=90;w=60;pk=:NzExYTliNTMtYzc1ZS00ZjI2LTk2ZGMtNDg4NmI2OTc4NTlj:`
+    - For more info, check the [IETF Draft](https://www.ietf.org/archive/id/draft-ietf-httpapi-ratelimit-headers-10.txt) or ask an LLM using the documentation content.
+    - The X-Ratelimit-\* headers will continue to show the lowest/nearest rate limit to reach, for 99% of users will therefore nothing change
+- **MMR v3 Peak RR**
+  - Now defaults to `0`. Check this thread to find out why: [Incorrect PEAK MMR](https://discord.com/channels/704231681309278228/1442622130683383848)

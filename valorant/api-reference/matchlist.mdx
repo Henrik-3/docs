@@ -1,0 +1,52 @@
+---
+title: "Matchlist"
+description: "Get the matchlist of a user"
+---
+
+# Matchlist
+
+<Info>
+  You may also want to check out [stored matches](/valorant/api-reference/stored-data) as a data starting point for new users in your application
+</Info>
+
+Here you can get the matchlist of a user.
+
+    
+
+## Get Matches by Name and Tag (v3)
+
+```json
+GET /valorant/v3/matches/{region}/{name}/{tag}
+```
+
+## Get Matches by Name and Tag (v4)
+
+```json
+GET /valorant/v4/matches/{region}/{platform}/{name}/{tag}
+```
+
+## Get Matches by PUUID (v3)
+
+```json
+GET /valorant/v3/by-puuid/matches/{region}/{puuid}
+```
+
+## Get Matches by PUUID (v4)
+
+```json
+GET /valorant/v4/by-puuid/matches/{region}/{platform}/{puuid}
+```
+
+<Note>
+  v4 endpoints support pagination via the `?start=INDEX` query parameter (added in v4.1.0).
+</Note>
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `size` | number | Amount of matches returned (default: 10) |
+| `start` | number | Pagination start index (v4 only) |
+| `map` | string | Filter by map name |
+| `mode` | string | Filter by game mode |
+| `queue` | string | Filter by queue type |

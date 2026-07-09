@@ -1,0 +1,81 @@
+---
+title: "Premier"
+description: "Get leaderboard, search for teams, match history, metadata, seasons and conferences"
+---
+
+# Premier
+
+Get leaderboard, search for teams, match history, metadata, seasons and conferences.
+
+     
+
+## Get Premier Team by Name and Tag
+
+```json
+GET /valorant/v1/premier/{team_name}/{team_tag}
+```
+
+## Get Premier Team Match History by Name and Tag
+
+```json
+GET /valorant/v1/premier/{team_name}/{team_tag}/history
+```
+
+## Get Premier Team by ID
+
+```json
+GET /valorant/v1/premier/{team_id}
+```
+
+## Get Premier Team Match History by ID
+
+```json
+GET /valorant/v1/premier/{team_id}/history
+```
+
+## Search Premier Teams
+
+```json
+GET /valorant/v1/premier/search
+```
+
+<Note>
+  Returns 50 entries if no query parameters are provided.
+</Note>
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `name` | string | Team name to search for |
+| `tag` | string | Team tag to search for |
+
+## Get Premier Conferences
+
+```json
+GET /valorant/v1/premier/conferences
+```
+
+## Get Premier Seasons
+
+```json
+GET /valorant/v1/premier/seasons/{region}
+```
+
+## Get Premier Leaderboard
+
+```json
+GET /valorant/v1/premier/leaderboard/{region}
+```
+
+## Get Premier Leaderboard by Conference
+
+```json
+GET /valorant/v1/premier/leaderboard/{region}/{conference}
+```
+
+## Get Premier Leaderboard by Conference and Division
+
+```json
+GET /valorant/v1/premier/leaderboard/{region}/{conference}/{division}
+```
