@@ -9,18 +9,26 @@ Premium features unlock higher rate limits and additional capabilities for the H
 
 ## Tiers
 
-| Tier | Rate limits | Cache TTL | Webhooks | Webhook users |
-| --- | --- | --- | --- | --- |
-| Free | Standard key limits apply | 300s | Not available | 0 |
-| Premium | Higher plan limits when more generous than your key | Plan dependent | Match & MMR updates | Plan dependent |
+<CardGroup cols={2}>
+  <Card title="Free" icon="circle-dollar-sign">
+    Default tier for every API key.
 
-## Advantages of going premium
+    - Standard key rate limits
+    - 300s cache TTL
+    - No webhook updates
+    - No tracked users
+  </Card>
 
-- **Higher rate limits** — premium plans can raise the requests allowed per interval above the default key limits. The API automatically uses the more generous limit between your key and your active plan.
-- **Fresher cached data** — premium plans may use a shorter cache TTL, so responses update sooner.
-- **Webhook updates** — get automatic push notifications when a tracked player finishes a match or their MMR changes.
-- **More tracked users** — premium plans include a higher webhook user quota.
-- **Faster webhook polling** — premium plans may poll tracked users more frequently.
+  <Card title="Premium" icon="crown">
+    Subscribed via the Discord app store. Plan values depend on the chosen tier.
+
+    - Higher rate limits when the plan is more generous than your key
+    - Plan-dependent cache TTL (often shorter for fresher data)
+    - Webhook updates for match and MMR changes
+    - Higher tracked-user quota
+    - Faster webhook polling interval
+  </Card>
+</CardGroup>
 
 ## How to get premium
 
