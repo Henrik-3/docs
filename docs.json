@@ -66,6 +66,10 @@
       {
         "label": "Mail",
         "href": "mailto:contact@henrikdev.xyz"
+      },
+      {
+        "href": "https://discord.com/discovery/applications/737704450478833735/store",
+        "label": "Premium"
       }
     ]
   },
@@ -75,5 +79,16 @@
       "linkedin": "https://www.linkedin.com/in/henrik-mertens-82b704214/"
     }
   },
-  "description": "HenrikDev Valorant API Documentation"
+  "description": "HenrikDev API Documentation",
+  "icons": {
+    "library": "lucide"
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "mcp"
+    ],
+    "display": "header"
+  }
 }
