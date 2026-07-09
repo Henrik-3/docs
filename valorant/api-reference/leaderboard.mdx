@@ -1,0 +1,103 @@
+---
+title: "Leaderboard"
+description: "Returns the current leaderboard for the requested region"
+---
+
+# Leaderboard
+
+Returns the current leaderboard for the requested region.
+
+<Danger>
+  v1 is deprecated. Please switch to v3 to be on the latest version
+</Danger>
+
+ 
+
+## Get Leaderboard (v1)
+
+```json
+GET /valorant/v1/leaderboard/{region}
+```
+
+## Get Leaderboard (v3)
+
+```json
+GET /valorant/v3/leaderboard/{region}/{platform}
+```
+
+### Query Parameters (v3)
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `start_index` | number | Between 1 and total players (dynamic) |
+| `size` | number | Defaults to 1000. Between 1 and total players (dynamic) |
+| `name` | string | Filter by player name |
+| `tag` | string | Filter by player tag |
+| `puuid` | string | Filter by PUUID |
+
+### Example Response (v3)
+
+```json
+{
+    "status": 200,
+    "results": {
+        "total": 15000,
+        "returned": 1,
+        "before": 0,
+        "after": 14999
+    },
+    "data": {
+        "updated_at": "2024-06-17T20:54:44.563Z",
+        "thresholds": [
+            {
+                "tier": {
+                    "id": 24,
+                    "name": "Immortal 1"
+                },
+                "start_index": 9434,
+                "threshold": 0
+            },
+            {
+                "tier": {
+                    "id": 25,
+                    "name": "Immortal 2"
+                },
+                "start_index": 4877,
+                "threshold": 100
+            },
+            {
+                "tier": {
+                    "id": 26,
+                    "name": "Immortal 3"
+                },
+                "start_index": 501,
+                "threshold": 200
+            },
+            {
+                "tier": {
+                    "id": 27,
+                    "name": "Radiant"
+                },
+                "start_index": 1,
+                "threshold": 550
+            }
+        ],
+        "players": [
+            {
+                "card": "bdc0c02c-441c-8ebc-ec5e-27bff0888ae0",
+                "title": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+                "is_banned": false,
+                "is_anonymized": false,
+                "puuid": "e244540d-08f9-5ac3-bdac-09c98483af99",
+                "name": "lovers rock",
+                "tag": "133",
+                "leaderboard_rank": 1,
+                "tier": 27,
+                "rr": 1126,
+                "wins": 103,
+                "updated_at": "2024-06-17T20:54:42.034Z"
+            }
+        ]
+    }
+}
+```

@@ -1,0 +1,25 @@
+---
+title: "Crosshair"
+description: "Generate a crosshair image from a crosshair code"
+---
+
+# Crosshair
+
+Generates a 1024x1024 pixel image of the requested crosshair. This endpoint may be moved to another url soon due to some code issues.
+
+## Generate Crosshair
+
+```json
+GET /valorant/v1/crosshair/generate
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `code` | string | **Required.** The crosshair share code |
+| `size` | number | Size of the generated image (default: 1024) |
+
+<Warning>
+  The crosshair code must be a valid Valorant crosshair share code.
+</Warning>

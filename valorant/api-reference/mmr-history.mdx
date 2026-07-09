@@ -1,0 +1,38 @@
+---
+title: "MMR History"
+description: "Returns the latest competitive games with RR movement for each game"
+---
+
+# MMR History
+
+Returns the latest competitive games with RR movement for each game.
+
+    
+
+## Get MMR History by Name and Tag (v1)
+
+```json
+GET /valorant/v1/mmr-history/{region}/{name}/{tag}
+```
+
+## Get MMR History by PUUID (v1)
+
+```json
+GET /valorant/v1/by-puuid/mmr-history/{region}/{puuid}
+```
+
+## Get MMR History by Name and Tag (v2)
+
+```json
+GET /valorant/v2/mmr-history/{region}/{platform}/{name}/{tag}
+```
+
+## Get MMR History by PUUID (v2)
+
+```json
+GET /valorant/v2/by-puuid/mmr-history/{region}/{platform}/{puuid}
+```
+
+<Note>
+  As of v4.2.0, the v2 endpoints include `refunded_rr` \[i32\] and `was_derank_protected` \[bool\] fields.
+</Note>

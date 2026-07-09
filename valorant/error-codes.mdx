@@ -1,0 +1,62 @@
+---
+title: "Error Codes"
+description: "Error codes and their meanings"
+---
+
+# Error Codes
+
+The API might return errors on user input error (mostly 400 status code) or errors that are related to fetching/parsing on the API side. As there can be multiple errors, the error codes is an array.
+
+| Code | Status | Meaning |
+| :-: | :-: | :-- |
+| 0 | 404 | Endpoint not found |
+| 0 | 400 | General bad user input |
+| 0 | 401 | Missing API Key [INFO](/general/auth) |
+| 0 | 403 | Invalid API Key [INFO](/general/auth) |
+| 0 | 429 | Rate Limit, check headers for more information |
+| 1 | 500 | Internal Error |
+| 2 | 501 | API Endpoint in this version does not exist |
+| 3 | 404 | File not found |
+| 4 | 400 | Invalid File |
+| 5 | 500 | Error while parsing |
+| 6 | 400 | Invalid region |
+| 7 | 400 | Invalid Country Code |
+| 8 | 400 | Invalid website category |
+| 9 | 500 | Error while fetching needed resource |
+| 10 | 400 | Unknown raw type |
+| 11 | 400 | JSON parsing error. Check input JSON |
+| 12 | - | - Internal - |
+| 13 | 500 | Internal Redis connection error |
+| 14 | - | - Internal - |
+| 15 | 500 | Premier endpoint temporary issues (check discord) |
+| 16 | 404 | Premier team not found |
+| 17 | 400 | Query param `division` must be a number |
+| 18 | 400 | Query param `division` must be a number between 1 & 21 |
+| 19 | 400 | Invalid premier conference |
+| 20 | 400 | Premier mixed querys detected (name & tag and puuid) |
+| 21 | 500 | Error while connecting to regular database |
+| 22 | 404 | Account not found |
+| 23 | 404 | Region for user not found. Please ask the user to play a deathmatch or another gamemode |
+| 24 | 404 | Error while fetching needed match data to retrieve users level & more |
+| 25 | 404 | No MMR data found for user |
+| 26 | 404 | Match not found |
+| 27 | 400 | Invalid mode/queue |
+| 28 | 400 | Invalid map |
+| 29 | 400 | Missing query param `size` |
+| 30 | 400 | Query param `size` & `page` must be a number |
+| 31 | 400 | Query param `size` must be greater than 0 |
+| 32 | 400 | Query param `page` must be greater than 0 |
+| 33 | 400 | Invalid season |
+| 34 | 400 | Query `name` is required |
+| 35 | 400 | Query `tag` is required |
+| 36 | 404 | User not found in leaderboard |
+| 37 | 400 | Invalid league |
+| 38 | 400 | Invalid locale |
+| 39 | 400 | Invalid crosshair code |
+| 40 | 400 | Duplicate Season query, please only supply one season query "season\_short" or "season\_id" at a time |
+| 41 | 404 | Leaderboard metadata not found |
+| 42 | 400 | Invalid platform, must be "pc" or "console" |
+| 43 | 400 | Invalid UUID/PUUID |
+| 44 | 400 | Query "division" must be 22 for super divisions |
+| 45 | 400 | Query "start" must be a valid number greater than 0 |
+| 46 | 404 | Riot has removed this implementation. Please check the changelog for more information |

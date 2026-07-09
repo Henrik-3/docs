@@ -1,0 +1,25 @@
+---
+title: "v4.1.0"
+description: "Version 4.1.0 changelog"
+---
+
+# v4.1.0
+
+## New
+
+- Added the ability to paginate through the matches v4 endpoints with the query `?start=INDEX`
+- Added MMR History v2 (see [here](/valorant/api-reference/mmr-history))
+- Added Stored MMR History v2 (see [here](/valorant/api-reference/stored-data))
+
+## Bug Fixes
+
+- Fixed the issue that you were not able to filter for custom mode and maps at the same time (only v4)
+- Fixed an issue were the `x-cache-ttl` header value was 100x higher then expected on account v1 and v2
+
+## Changes
+
+- Internal changes to how the redis connection is handled to improve performance (marginal performance improvements from 2-5%)
+- Matches v4 now has a new way on how matches are fetched
+  - This should mitigate missing matches when using the `map` and `size` filter for example
+    - **Before:** Size = 10 and map = ascent =\> Only the last 10 matches were filtered for the map, resulting in 2-3 matches returned
+    - **Now:** Size = 10 and map = ascent =\> Database is filtered for the last 10 matches that were played on ascent for this user, resulting in 10 matches returned (if enough data is stored)

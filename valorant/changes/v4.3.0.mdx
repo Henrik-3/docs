@@ -1,0 +1,20 @@
+---
+title: "v4.3.0"
+description: "Version 4.3.0 changelog"
+---
+
+# v4.3.0
+
+## Changes
+
+- Match Infrastructure is now using a combination of metadata via database \+ Backblaze B2 \+ Cloudflare CDN \+ Redis Cache
+  - This change is required to be able to serve the API (especially the stored matches) for free without the need of charging everyone for it.
+
+## Fixes
+
+- The cluster should now return the correct cluster name again instead of null
+
+## Additional stuff
+
+- Preparing stuff for the upcoming admin panel for the API
+  - Will include request history, analytics, ability to request keys and the option to unlock additional "features" like ttl cache removal (currently 5min)

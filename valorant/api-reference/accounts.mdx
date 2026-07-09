@@ -1,0 +1,93 @@
+---
+title: "Accounts"
+description: "Get basic account data like account level, name, tag, puuid and more"
+---
+
+# Accounts
+
+<Info>
+  Use v2 for console support
+</Info>
+
+With these endpoints, you can get basic account data like account level, name, tag, puuid and more
+
+  
+
+## Get Account by Name and Tag (v1)
+
+<CodeGroup>
+
+```bash
+curl "https://api.henrikdev.xyz/valorant/v1/account/{name}/{tag}" \
+  -H "Authorization: YOUR_API_KEY"
+```
+
+```python
+import requests
+
+headers = {"Authorization": "YOUR_API_KEY"}
+response = requests.get(
+    "https://api.henrikdev.xyz/valorant/v1/account/{name}/{tag}",
+    headers=headers
+)
+print(response.json())
+```
+
+```javascript
+const response = await fetch(
+  "https://api.henrikdev.xyz/valorant/v1/account/{name}/{tag}",
+  { headers: { Authorization: "YOUR_API_KEY" } }
+);
+const data = await response.json();
+console.log(data);
+```
+
+</CodeGroup>
+
+```json
+GET /valorant/v1/account/{name}/{tag}
+```
+
+## Get Account by Name and Tag (v2)
+
+```json
+GET /valorant/v2/account/{name}/{tag}
+```
+
+## Get Account by PUUID (v1)
+
+```json
+GET /valorant/v1/by-puuid/account/{puuid}
+```
+
+## Get Account by PUUID (v2)
+
+```json
+GET /valorant/v2/by-puuid/account/{puuid}
+```
+
+<Info>
+  The v2 endpoints support console platforms and return a `platforms` array in the response.
+</Info>
+
+### Example Response (v2)
+
+```json
+{
+    "status": 200,
+    "data": {
+        "puuid": "60325b89-7524-55be-be68-8ab3e7c0f2a3",
+        "region": "eu",
+        "account_level": 1086,
+        "name": "FUT rAx",
+        "tag": "VAL",
+        "card": "29d6aced-4f66-e000-15eb-71b1906a113a",
+        "title": "c8be8fda-46a8-9843-87bc-ecbf9672c227",
+        "platforms": [
+            "PC",
+            "CONSOLE"
+        ],
+        "updated_at": "2024-06-16T18:33:11.095Z"
+    }
+}
+```

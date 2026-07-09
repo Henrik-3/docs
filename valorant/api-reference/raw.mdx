@@ -1,0 +1,27 @@
+---
+title: "Raw"
+description: "Make direct requests to the riot server and get the response without additional parsing"
+---
+
+# Raw
+
+Make direct requests to the riot server and get the response without additional parsing from us.
+
+## Raw Request
+
+```json
+POST /valorant/v1/raw
+```
+
+### Request Body
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | string | **Required.** The type of raw request (e.g. `pduid`, `mmr`, `match`, `matchlist`) |
+| `region` | string | The region (eu, na, kr, ap, etc.) |
+| `value` | string | The value (name, puuid, etc.) |
+| `queries` | array | Additional queries to filter by |
+
+<Warning>
+  This endpoint requires a higher tier API key and returns raw data directly from Riot servers.
+</Warning>

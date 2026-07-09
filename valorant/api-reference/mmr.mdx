@@ -1,0 +1,100 @@
+---
+title: "MMR"
+description: "Get detailed MMR (Match Making Rating) data"
+---
+
+# MMR
+
+<Danger>
+  v1 is deprecated. Please switch to v3 to be on the latest version
+</Danger>
+
+Get a more detailed response for all MMR data
+
+    
+
+## Get MMR by Name and Tag (v2)
+
+```json
+GET /valorant/v2/mmr/{region}/{name}/{tag}
+```
+
+## Get MMR by Name and Tag (v3)
+
+```json
+GET /valorant/v3/mmr/{region}/{platform}/{name}/{tag}
+```
+
+## Get MMR by PUUID (v2)
+
+```json
+GET /valorant/v2/by-puuid/mmr/{region}/{puuid}
+```
+
+## Get MMR by PUUID (v3)
+
+```json
+GET /valorant/v3/by-puuid/mmr/{region}/{platform}/{puuid}
+```
+
+### Example Response (v3)
+
+```json
+{
+  "status": 200,
+  "data": {
+    "account": {
+      "puuid": "54942ced-1967-5f66-8a16-1e0dae875641",
+      "name": "Henrik3",
+      "tag": "VALO"
+    },
+    "peak": {
+      "season": {
+        "id": "2de5423b-4aad-02ad-8d9b-c0a931958861",
+        "short": "e6a3"
+      },
+      "ranking_schema": "ascendant",
+      "tier": {
+        "id": 21,
+        "name": "Ascendant 1"
+      }
+    },
+    "current": {
+      "tier": {
+        "id": 18,
+        "name": "Diamond 1"
+      },
+      "rr": 38,
+      "last_change": 15,
+      "elo": 1538,
+      "leaderboard_placement": null
+    },
+    "seasonal": [
+      {
+        "season": {
+          "id": "22d10d66-4d2a-a340-6c54-408c7bd53807",
+          "short": "e8a2"
+        },
+        "wins": 22,
+        "games": 42,
+        "end_tier": {
+          "id": 18,
+          "name": "Diamond 1"
+        },
+        "ranking_schema": "ascendant",
+        "leaderboard_placement": null,
+        "act_wins": [
+          {
+            "id": 18,
+            "name": "Diamond 1"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+<Note>
+  As of v4.5.0, MMR v3 Peak RR now defaults to `0`. See the v4.5.0 changelog for more info.
+</Note>
