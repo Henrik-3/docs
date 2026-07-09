@@ -1,14 +1,62 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
   "theme": "almond",
   "name": "HenrikDev API",
+  "description": "HenrikDev API Documentation",
   "colors": {
-    "primary": "#e3c31a",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#e9d022",
+    "light": "#e9d022",
+    "dark": "#f7740b"
+  },
+  "logo": {
+    "light": "/WebsiteSmall.png",
+    "dark": "/WebsiteSmall.png"
   },
   "favicon": "/WebsiteSmall.png",
+  "navbar": {
+    "links": [
+      {
+        "href": "mailto:contact@henrikdev.xyz",
+        "label": "Mail"
+      },
+      {
+        "href": "https://discord.com/discovery/applications/737704450478833735/store",
+        "label": "Premium"
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/Henrik-3",
+      "linkedin": "https://www.linkedin.com/in/henrik-mertens-82b704214"
+    }
+  },
+  "icons": {
+    "library": "lucide"
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "mcp"
+    ],
+    "display": "header"
+  },
+  "appearance": {
+    "strict": false
+  },
+  "background": {
+    "decoration": "gradient"
+  },
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Discord",
+          "icon": "discord",
+          "href": "https://discord.gg/henrikdev-systems-704231681309278228"
+        }
+      ]
+    },
     "tabs": [
       {
         "tab": "Guides",
@@ -48,49 +96,6 @@
         "tab": "OpenAPI Reference",
         "openapi": "https://api.henrikdev.xyz/openapi.json"
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Discord",
-          "href": "https://discord.gg/henrikdev-systems-704231681309278228",
-          "icon": "discord"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/WebsiteSmall.png",
-    "dark": "/WebsiteSmall.png"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Mail",
-        "href": "mailto:contact@henrikdev.xyz"
-      },
-      {
-        "href": "https://discord.com/discovery/applications/737704450478833735/store",
-        "label": "Premium"
-      }
     ]
-  },
-  "footer": {
-    "socials": {
-      "github": "https://github.com/Henrik-3",
-      "linkedin": "https://www.linkedin.com/in/henrik-mertens-82b704214/"
-    }
-  },
-  "description": "HenrikDev API Documentation",
-  "icons": {
-    "library": "lucide"
-  },
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "mcp"
-    ],
-    "display": "header"
   }
 }
