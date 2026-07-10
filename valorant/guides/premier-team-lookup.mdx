@@ -1,18 +1,14 @@
 ---
-title: "Premier & Stored Matches"
-description: "Important integration behavior for VALORANT Premier lookups and stored match history"
-sidebarTitle: "Premier & Stored Matches"
+title: "Premier Team Lookup"
+description: "Premier team lookup behavior, seasons, affinities, and fallback resolution"
+sidebarTitle: "Premier Team Lookup"
 ---
 
-# VALORANT Premier team lookup and stored matches
+# Premier Team Lookup
 
-This guide documents the current behavior of the Premier team lookup endpoints and the stored-matches endpoints. It is intended for third-party API consumers.
+This guide explains how to integrate with the Premier team lookup endpoints, including season selection, affinity disambiguation, and fallback resolution.
 
-The examples use `https://api.henrikdev.xyz` as the API base URL. URL-encode Riot ID names and tags when they contain characters that are meaningful in a URL.
-
-## Premier team lookup
-
-### Endpoints
+## Endpoints
 
 | Use case | Endpoint |
 | --- | --- |
@@ -62,7 +58,7 @@ The name and UUID lookup endpoints return a full `PremierTeamV1Response` envelop
 
 `enrolled` is the team's actual enrollment state. It is no longer reported as `true` for every team. `ranked` indicates whether a ranking is available for the team. The lightweight objects returned by search and leaderboard also include `ranked`.
 
-### Season selection
+## Season selection
 
 The following endpoints accept the optional `season` query parameter:
 
@@ -79,7 +75,7 @@ If `season` is omitted, the API uses the current Premier season. If it is suppli
 
 For a historical season, the history endpoints return the season's stored history. The live Riot match-history refresh is performed only for the current season. This means an old season should be treated as an archived snapshot, not as a live feed.
 
-### Affinity disambiguation
+## Affinity disambiguation
 
 The direct name and UUID lookup endpoints accept an optional `affinity` query parameter:
 
@@ -107,7 +103,7 @@ The affinity filter is useful when the same name/tag is used by more than one te
 
 The UUID lookup cannot be ambiguous because the UUID identifies the roster. It uses `affinity` to restrict which Riot service region is queried and to verify the returned team.
 
-### How resolution works
+## How resolution works
 
 The lookup is backed by both the local Premier index and Riot's public roster information:
 
@@ -121,107 +117,10 @@ The name fallback is not a global Riot name search. It can rehydrate a team when
 
 The fallback can also be slower and may consume background requests because it may contact Riot. A cache hit is normally returned directly from the stored team record.
 
-### Lookup errors to handle
+## Lookup errors to handle
 
 | HTTP status | Meaning |
 | --- | --- |
 | `400` | Invalid season, invalid affinity, or an invalid UUID on the UUID route |
 | `404` | No team could be resolved for the requested season |
 | `409` | Name/tag matches multiple teams; retry with `affinity` |
-
-## Stored matches
-
-### Endpoints
-
-| Use case | Endpoint |
-| --- | --- |
-| Stored matches by Riot ID | `GET /valorant/v1/stored-matches/{affinity}/{name}/{tag}` |
-| Stored matches by PUUID | `GET /valorant/v1/by-puuid/stored-matches/{affinity}/{puuid}` |
-
-Both endpoints return the same response shape. The Riot ID route resolves the account first; the PUUID route uses the supplied player UUID.
-
-### Query parameters
-
-| Parameter | Description |
-| --- | --- |
-| `mode` | Optional game-mode filter, using the API's mode name such as `competitive` or `unrated` |
-| `map` | Optional map-name filter such as `Ascent` |
-| `size` | Optional page size. Use a positive integer when paginating. If omitted, the endpoint returns all currently stored matching records. |
-| `page` | Optional 1-based page number. `size` is required when `page` is used. |
-
-Example:
-
-```text
-GET /valorant/v1/stored-matches/eu/Example/1234?mode=competitive&map=Ascent&size=20&page=1
-```
-
-Results are sorted newest first by match start time. `page` and `size` are applied to the stored database records after the API has attempted to fetch the recent match IDs from Riot.
-
-### Response shape
-
-```json
-{
-  "status": 200,
-  "results": {
-    "total": 1,
-    "returned": 1,
-    "before": 0,
-    "after": 0
-  },
-  "data": [
-    {
-      "meta": {
-        "id": "match-uuid",
-        "map": {"id": "map-uuid", "name": "Ascent"},
-        "version": "release-10.00-shipping-12-3456789",
-        "mode": "Competitive",
-        "started_at": "2026-07-10T12:34:56Z",
-        "season": {"id": "season-uuid", "short": "E10A5"},
-        "region": "eu",
-        "cluster": "Frankfurt"
-      },
-      "stats": {
-        "puuid": "player-uuid",
-        "name": "Example",
-        "tag": "1234",
-        "team": "Blue",
-        "level": 150,
-        "character": {"id": "agent-uuid", "name": "Jett"},
-        "tier": 22,
-        "score": 250,
-        "kills": 20,
-        "deaths": 15,
-        "assists": 5,
-        "shots": {"head": 10, "body": 40, "leg": 5},
-        "damage": {"made": 3200, "received": 2800}
-      },
-      "teams": {"red": 13, "blue": 9}
-    }
-  ]
-}
-```
-
-`results.total`, `results.returned`, `before`, and `after` refer to the stored records matching the request. `teams.red` and `teams.blue` are the stored round-win values; they are not team IDs.
-
-## Important completeness behavior
-
-Stored matches are an accumulating materialized subset of Riot's match history, not a pre-populated mirror of every match.
-
-When a stored-matches request runs, the API:
-
-1. Fetches the player's recent match IDs from Riot's competitive-updates history.
-2. Attempts to fetch each match's full details.
-3. Stores successful match details in the match store and writes searchable metadata for the players, map, mode, season, and teams.
-4. Reads the response from the stored metadata collection, applying the requested filters and pagination.
-
-The endpoint does not return a placeholder for a match that could not be fetched or stored. A match may be absent because Riot did not return usable details, the match is temporarily unavailable, or storage failed. The fetch attempts run concurrently and their individual errors are not returned as per-item errors by this endpoint.
-
-As a result:
-
-- The list may have holes compared with Riot's match history.
-- `returned` may be smaller than `size`.
-- `total` is not the player's total number of matches; it is the number currently stored that match the filters.
-- A page can change between requests as previously unavailable matches are successfully stored.
-- A successful fetch normally makes that match available to later stored-matches requests, subject to the same account, affinity, mode, and map filters.
-
-Consumers should use `meta.id` and `meta.started_at` to identify and order matches, tolerate missing matches, and avoid assuming that page boundaries represent fixed positions in Riot's complete history. If a complete or immediately live history is required, use the non-stored match-history endpoints instead and treat their full-match availability separately.
