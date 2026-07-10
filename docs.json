@@ -87,6 +87,13 @@
                   "valorant/changes/v4.0.0",
                   "valorant/changes"
                 ]
+              },
+              {
+                "group": "Integration Guides",
+                "pages": [
+                  "valorant/guides/premier-team-lookup",
+                  "valorant/guides/stored-matches"
+                ]
               }
             ]
           }

@@ -1,0 +1,126 @@
+---
+title: "Premier Team Lookup"
+description: "Premier team lookup behavior, seasons, affinities, and fallback resolution"
+sidebarTitle: "Premier Team Lookup"
+---
+
+# Premier Team Lookup
+
+This guide explains how to integrate with the Premier team lookup endpoints, including season selection, affinity disambiguation, and fallback resolution.
+
+## Endpoints
+
+| Use case | Endpoint |
+| --- | --- |
+| Look up a team by name and tag | `GET /valorant/v1/premier/{name}/{tag}` |
+| Look up a team by roster UUID | `GET /valorant/v1/premier/{id}` |
+| Look up a team's match history by name and tag | `GET /valorant/v1/premier/{name}/{tag}/history` |
+| Look up a team's match history by roster UUID | `GET /valorant/v1/premier/{id}/history` |
+| Search the stored Premier team index | `GET /valorant/v1/premier/search` |
+
+The name and UUID lookup endpoints return a full `PremierTeamV1Response` envelope:
+
+```json
+{
+  "status": 200,
+  "data": {
+    "id": "roster-uuid",
+    "name": "Example Team",
+    "tag": "EXMP",
+    "enrolled": true,
+    "ranked": true,
+    "stats": {
+      "wins": 4,
+      "matches": 6,
+      "losses": 2,
+      "rounds_won": 78,
+      "rounds_lost": 64
+    },
+    "placement": {
+      "points": 250,
+      "conference": "EU",
+      "division": 5,
+      "place": 42
+    },
+    "customization": {
+      "icon": "icon-asset-id",
+      "image": "https://cdn.henrikdev.xyz/valorant/v1/premier/team-icon/icon-asset-id?primary=...",
+      "primary": "#112233",
+      "secondary": "#445566",
+      "tertiary": "#778899"
+    },
+    "member": [
+      {"puuid": "player-uuid", "name": "Player", "tag": "TAG"}
+    ]
+  }
+}
+```
+
+`enrolled` is the team's actual enrollment state. It is no longer reported as `true` for every team. `ranked` indicates whether a ranking is available for the team. The lightweight objects returned by search and leaderboard also include `ranked`.
+
+## Season selection
+
+The following endpoints accept the optional `season` query parameter:
+
+- `/valorant/v1/premier/{name}/{tag}`
+- `/valorant/v1/premier/{name}/{tag}/history`
+- `/valorant/v1/premier/{id}`
+- `/valorant/v1/premier/{id}/history`
+- `/valorant/v1/premier/search`
+- `/valorant/v1/premier/leaderboard/{affinity}` and its conference/division variants
+
+`season` is a Premier season ID. Season IDs can be obtained from `GET /valorant/v1/premier/seasons/{affinity}`.
+
+If `season` is omitted, the API uses the current Premier season. If it is supplied, the ID is validated before the lookup. An invalid season returns HTTP `400` with the `Invalid season` error. When an affinity is supplied to a direct team lookup, the season must also exist for that affinity.
+
+For a historical season, the history endpoints return the season's stored history. The live Riot match-history refresh is performed only for the current season. This means an old season should be treated as an archived snapshot, not as a live feed.
+
+## Affinity disambiguation
+
+The direct name and UUID lookup endpoints accept an optional `affinity` query parameter:
+
+```text
+GET /valorant/v1/premier/Example%20Team/EXMP?season=<season-id>&affinity=eu
+GET /valorant/v1/premier/<roster-uuid>?season=<season-id>&affinity=eu
+```
+
+Supported affinity values are `na`, `eu`, `ap`, `kr`, `br`, and `latam`. `br` and `latam` use the NA Riot service region internally, while remaining distinct API affinity values.
+
+The affinity filter is useful when the same name/tag is used by more than one team. Without enough information to identify one team, the name lookup returns HTTP `409`:
+
+```json
+{
+  "errors": [
+    {
+      "code": 49,
+      "message": "Multiple Premier teams match this name and tag. Supply an affinity query.",
+      "status": 409,
+      "details": null
+    }
+  ]
+}
+```
+
+The UUID lookup cannot be ambiguous because the UUID identifies the roster. It uses `affinity` to restrict which Riot service region is queried and to verify the returned team.
+
+## How resolution works
+
+The lookup is backed by both the local Premier index and Riot's public roster information:
+
+1. The API checks the stored team record for the requested season.
+2. If a name/tag lookup is not already stored for that season, it checks known teams with the same name/tag and revalidates them against Riot's public roster endpoint for the requested season.
+3. If a UUID lookup is not stored, it probes the relevant Riot service region, or all supported regions when no affinity is provided.
+4. The Riot response is accepted only when the roster has data for the requested season and the returned identity and affinity match the request.
+5. A successfully resolved team is stored for later requests.
+
+The name fallback is not a global Riot name search. It can rehydrate a team when the API already knows a candidate roster UUID from another stored season or lookup. A completely new name/tag may therefore still return `Premier Team not found` until a roster UUID or team record becomes known.
+
+The fallback can also be slower and may consume background requests because it may contact Riot. A cache hit is normally returned directly from the stored team record.
+
+## Lookup errors to handle
+
+| HTTP status | Meaning |
+| --- | --- |
+| `400` | Invalid season, invalid affinity, or an invalid UUID on the UUID route |
+| `404` | No team could be resolved for the requested season |
+| `409` | Name/tag matches multiple teams; retry with `affinity` |
