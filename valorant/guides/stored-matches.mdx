@@ -91,12 +91,11 @@ When a stored-matches request runs, the API:
 3. Stores successful match details in the match store and writes searchable metadata for the players, map, mode, season, and teams.
 4. Reads the response from the stored metadata collection, applying the requested filters and pagination.
 
-The endpoint does not return a placeholder for a match that could not be fetched or stored. A match may be absent because Riot did not return usable details, the match is temporarily unavailable, or storage failed. The fetch attempts run concurrently and their individual errors are not returned as per-item errors by this endpoint.
+The endpoint does not return a placeholder for a match that could not be fetched or stored. A match may be absent because Riot did not return usable details, the match is temporarily unavailable, storage failed <u>or was simply never requested by any developer using this API</u>. The fetch attempts run concurrently and their individual errors are not returned as per-item errors by this endpoint.
 
 As a result:
 
 - The list may have holes compared with Riot's match history.
-- `returned` may be smaller than `size`.
 - `total` is not the player's total number of matches; it is the number currently stored that match the filters.
 - A page can change between requests as previously unavailable matches are successfully stored.
 - A successful fetch normally makes that match available to later stored-matches requests, subject to the same account, affinity, mode, and map filters.
