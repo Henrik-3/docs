@@ -9,7 +9,8 @@ description: "Version 4.9.0 changelog"
 
 - **Premier team lookup**
   - Team lookups by name and tag now support the optional `affinity` filter
-  - Team lookups by name or UUID can resolve teams that are not already cached
+  - Team lookups by name or UUID can now resolve teams even if they are not on the leaderboard this season
+    - Requirement tho is the name hasn't changed in the meantime since last time on leaderboard AND had to be on the leaderboard atleast once (played an official game)
   - Ambiguous name and tag matches now return an explicit conflict response
 - **Premium tiers and features**
   - Premium plans provide higher rate limits, shorter cache times, and webhook access for tracked users
@@ -19,3 +20,7 @@ description: "Version 4.9.0 changelog"
 
 - Request history and detailed statistics now load faster
 - OpenAPI documentation now includes clearer summaries for Valorant and public API routes.
+
+## Fixes
+
+- Fixes that new matches will not receive "" as queueid if there is a new mode which is not 100% supported by the API yet
