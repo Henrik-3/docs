@@ -7,10 +7,6 @@ description: "Version 4.9.0 changelog"
 
 ## New
 
-- **Premium webhook user management**
-  - Premium users can now add, update, and remove tracked users through `/public/v1/premium/webhook/users`
-  - Premium webhook endpoints now accept approved API keys in addition to JWT authentication
-  - Webhook payloads can use selectable match and MMR history response schemas
 - **Premier team lookup**
   - Team lookups by name and tag now support the optional `affinity` filter
   - Team lookups by name or UUID can resolve teams that are not already cached
@@ -22,6 +18,4 @@ description: "Version 4.9.0 changelog"
 ## Changes
 
 - Request history and detailed statistics now load faster
-- Premium API keys are now created automatically when an entitlement becomes active if the user does not already have an API key
-- Canceled subscriptions remain active until the current billing period ends
 - OpenAPI documentation now includes clearer summaries for Valorant and public API routes.
