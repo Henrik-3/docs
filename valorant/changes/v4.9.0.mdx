@@ -1,0 +1,26 @@
+---
+title: "v4.9.0"
+description: "Version 4.9.0 changelog"
+---
+
+# v4.9.0
+
+## New
+
+- **Premium webhook user management**
+  - Premium users can now add, update, list, and delete tracked users through `/public/v1/premium/webhook/users`.
+  - Premium webhook endpoints support API key authentication in addition to JWT authentication.
+  - Premium webhook payloads can select match and MMR history response schemas.
+- **Automatic premium API keys**
+  - An approved premium API key is now created automatically when an entitlement becomes active and the user does not already have an API key.
+- **Premier team lookup**
+  - Premier team lookups by name or UUID can now resolve teams from live public data when they are not cached locally.
+  - Name lookups support `affinity` filtering and return an explicit error when multiple teams match.
+  - Background request costs can be configured per premium plan.
+
+## Changes
+
+- Request history, detailed statistics, and admin global usage now use ClickHouse-backed request events and aggregated analytics.
+  - Added request-level event tracking, response-time percentiles, bucket history, and a historical `backfill_request_events` job.
+- Lemon Squeezy webhooks now ignore unrelated non-subscription events and keep canceled subscriptions active until their billing period ends.
+- OpenAPI documentation now includes summaries for Valorant and public API routes.
