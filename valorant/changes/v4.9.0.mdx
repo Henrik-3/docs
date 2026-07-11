@@ -5,21 +5,20 @@ description: "Version 4.9.0 changelog"
 
 # v4.9.0
 
-## For external developers
+## New
 
 - **Premium webhook user management**
-  - Manage tracked accounts through `/public/v1/premium/webhook` and `/public/v1/premium/webhook/users`.
-  - Premium webhook endpoints now accept an approved API key in addition to JWT authentication.
-  - Configure the match and MMR history response schemas used in webhook payloads.
-- **Premium access**
-  - An approved Premium API key is created automatically when an entitlement becomes active and the user does not already have an API key.
-  - Canceled subscriptions remain usable until the current billing period ends.
-- **Premier lookups**
-  - Lookups by team name or UUID can resolve live data when a team is not already cached.
-  - Name lookups support the optional `affinity` filter.
-  - If a name and tag match multiple teams, the API now returns an explicit conflict response so the request can be narrowed.
-- **History and statistics**
-  - Request history and detailed statistics continue to provide status, timing, endpoint, and bucket information with improved reliability.
-  - No integration changes are required for existing clients.
-- **API documentation**
-  - OpenAPI endpoint descriptions now include clearer summaries for Valorant and public routes.
+  - Premium users can now add, update, and remove tracked users through `/public/v1/premium/webhook/users`
+  - Premium webhook endpoints now accept approved API keys in addition to JWT authentication
+  - Webhook payloads can use selectable match and MMR history response schemas
+- **Premier team lookup**
+  - Team lookups by name and tag now support the optional `affinity` filter
+  - Team lookups by name or UUID can resolve teams that are not already cached
+  - Ambiguous name and tag matches now return an explicit conflict response
+
+## Changes
+
+- Premium API keys are now created automatically when an entitlement becomes active if the user does not already have an API key
+- Canceled subscriptions remain active until the current billing period ends
+- Request history and detailed statistics continue to provide status, timing, endpoint, and bucket information
+- OpenAPI documentation now includes clearer summaries for Valorant and public API routes.
