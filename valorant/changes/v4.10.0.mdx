@@ -1,0 +1,55 @@
+---
+title: "v4.10.0"
+description: "Version 4.9.0 changelog"
+---
+
+# v4.10.0 - Available on BETA
+
+## New
+
+- Accolades endpoints
+  - Retrieve player accolades by name and tag or PUUID
+  - Includes all-time and seasonal summaries, personal bests, and match accolades
+  - `/valorant/v1/accolades/{affinity}/{platform}/{name}/{tag}`
+  - `/valorant/v1/by-puuid/accolades/{affinity}/{platform}/{puuid}`
+- Agent mastery endpoints
+  - Retrieve mastery for all agents or a specific agent by name and tag or PUUID
+  - Includes mastery tracks, flourish levels, and customization
+  - Single-agent lookups also include stat modules when available
+  - `/valorant/v1/agent-mastery/{affinity}/{platform}/{name}/{tag}`
+  - `/valorant/v1/agent-mastery/{affinity}/{platform}/{name}/{tag}/{agent_id}`
+  - `/valorant/v1/by-puuid/agent-mastery/{affinity}/{platform}/{puuid}`
+  - `/valorant/v1/by-puuid/agent-mastery/{affinity}/{platform}/{puuid}/{agent_id}`
+- Premier team lookup v2
+  - Retrieve live team data by team ID, team name and tag, player PUUID, or player name and tag
+  - Includes member roles and join dates, seasonal results, promotion status, and prestige
+  - Team name lookups still require the team to exist in our index
+  - `/valorant/v2/premier/teams/{affinity}/{id}`
+  - `/valorant/v2/premier/teams/{affinity}/{name}/{tag}`
+  - `/valorant/v2/premier/players/{affinity}/{puuid}`
+  - `/valorant/v2/premier/players/{affinity}/{name}/{tag}`
+- API keys can now be regenerated from the dashboard
+
+## Changes
+
+- Match v4 responses now include additional data where available
+  - Player performance scores, breakdowns, and ratings
+  - Drafted ability casts and Bloomline customization
+  - Match and team MVPs, team placement, and team health
+  - Round first blood, winning team role, and ceremony details
+- MMR v3 responses now include lifetime and seasonal prestige, ranked visibility settings, additional rank protection details, and the latest competitive update
+- MMR history v2 and stored MMR v2 now include additional competitive update details
+  - Queue ID, match duration, previous tier and RR, performance bonuses, penalties, and placement status
+  - Additional fields are null when unavailable, including on older stored records
+- Improved validation for match filters, pagination, regions, and platforms
+- OpenAPI documentation now includes clearer parameter options, response schemas, and error descriptions
+- Improved background request accounting
+
+## Fixes
+
+- Fixed historical rank names and peak rank comparisons across ranking schemas
+- Fixed match economy averages to use the rounds played by each player
+- Fixed custom match history map filtering before applying result limits
+- Fixed invalid pagination values being ignored in match and leaderboard requests
+- Improved handling of missing agent, ability, and store item data
+- Fixed the dashboard success rate calculation to use actual status code totals
