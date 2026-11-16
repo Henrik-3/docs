@@ -1,5 +1,5 @@
 {
-  "theme": "almond",
+  "theme": "aspen",
   "name": "HenrikDev API",
   "description": "HenrikDev API Documentation",
   "colors": {
@@ -59,7 +59,19 @@
     },
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Omniference",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "omniference/index",
+              "omniference/quickstart"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "HenrikDev API",
         "groups": [
           {
             "group": "Getting Started",
@@ -98,12 +110,12 @@
                 ]
               }
             ]
+          },
+          {
+            "group": "OpenAPI Reference",
+            "pages": []
           }
         ]
-      },
-      {
-        "tab": "OpenAPI Reference",
-        "openapi": "https://api.henrikdev.xyz/openapi.json"
       }
     ]
   }

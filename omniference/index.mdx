@@ -1,0 +1,30 @@
+---
+title: "Omniference"
+description: "A multi-protocol inference engine with provider adapters"
+---
+
+Omniference is a flexible, multi-protocol inference engine written in Rust. It gives you one unified interface to AI model providers such as Ollama and OpenAI.
+
+## Features
+
+- **Multi-provider support:** Ollama, OpenAI and an extensible adapter architecture
+- **Streaming:** real-time streaming responses from models
+- **OpenAI-compatible API:** a drop-in replacement for OpenAI's API
+- **Multiple interfaces:** HTTP server, Discord bot, CLI and library usage
+- **Embeddable:** integrates into existing Axum applications
+- **Type-safe:** strong typing throughout, built on Tokio
+
+## Architecture
+
+- **Core layer:** router, adapters and types (pure inference logic)
+- **Service layer:** provider management and model resolution
+- **Interface layer:** HTTP APIs, Discord bot, CLI
+- **Application layer:** full server or embeddable components
+
+<Card title="Quickstart" icon="rocket" href="/omniference/quickstart">
+  Add Omniference to your project.
+</Card>
+
+<Card title="Source code" icon="github" href="https://github.com/Henrik-3/omniference">
+  Omniference on GitHub (MIT license).
+</Card>
