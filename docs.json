@@ -17,10 +17,6 @@
       {
         "href": "mailto:contact@henrikdev.xyz",
         "label": "Mail"
-      },
-      {
-        "href": "https://discord.com/discovery/applications/737704450478833735/store",
-        "label": "Premium"
       }
     ]
   },
@@ -74,6 +70,10 @@
         "tab": "HenrikDev API",
         "groups": [
           {
+            "group": "OpenAPI Specs",
+            "openapi": "https://api.henrikdev.xyz/openapi.json"
+          },
+          {
             "group": "Getting Started",
             "pages": [
               "general/auth",
@@ -110,10 +110,6 @@
                 ]
               }
             ]
-          },
-          {
-            "group": "OpenAPI Reference",
-            "pages": []
           }
         ]
       }
